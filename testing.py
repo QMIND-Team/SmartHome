@@ -16,20 +16,11 @@ import pandas as pd
 theatreData = pd.read_csv('theatre_data.csv')
 webData = pd.read_csv('web_data.csv')
 
-X = dataset.iloc[:, 3:13].values
-y = dataset.iloc[:, 13].values
+temperatureData = numpy.zeros(shape(48,2))
 
-
-# Encoding categorical data
-# Encoding the Independent Variable
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-labelencoder_X_1 = LabelEncoder()
-X[:, 1] = labelencoder_X_1.fit_transform(X[:, 1])
-labelencoder_X_2 = LabelEncoder()
-X[:, 2] = labelencoder_X_2.fit_transform(X[:, 2])
-onehotencoder = OneHotEncoder(categorical_features = [1])
-X = onehotencoder.fit_transform(X).toarray()
-X= X[:,1:]
+for i in range 48:
+    for j in range 2: 
+        temperatureData[i][j] = [theatreData.iloc[:,-1].values][webData.iloc[:,-1].values]
 
 # Splitting the dataset into the Training set and Test set
 from sklearn.cross_validation import train_test_split
