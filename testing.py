@@ -19,18 +19,21 @@ webData = pd.read_csv('web_data.csv')
 temperatureData = numpy.zeros(shape(48,2))
 
 for i in range 48:
-    for j in range 2: 
-        temperatureData[i][j] = [theatreData.iloc[:,-1].values][webData.iloc[:,-1].values]
+    theatreTempData[i] = theatreData.iloc[:,-1][i].values    
+    
+for j in range 48: 
+    webTempData[j] = webData.iloc[:,-1][j].values
 
-# Splitting the dataset into the Training set and Test set
-from sklearn.cross_validation import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+#Splitting the dataset into the Training set and Test set
+#from sklearn.cross_validation import train_test_split
+#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
 
 # Feature Scaling
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
-X_train = sc.fit_transform(X_train)
-X_test = sc.transform(X_test)
+theatreNorm = sc.fit_transform(webTempData)
+theatreNorm = sc.fit_transform(theatreTempData)
+
 
 #importing keras library and packages
 import keras
@@ -41,8 +44,7 @@ from keras.layers import Dense
 classifier= Sequential()
 
 #adding the input layer and the first hidden layer
-classifier.add(Dense(6,init='uniform', activation='relu', input_dim=11))
-classifier.add(Dense(6,init='uniform', activation='relu', input_dim=11))
+classifier.add(Dense(48,init='uniform', activation='relu', input_dim=11))
 classifier.add(Dense(1,init='uniform', activation='sigmoid', input_dim=11))
 
 #compile the ann
