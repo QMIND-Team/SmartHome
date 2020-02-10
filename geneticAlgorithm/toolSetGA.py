@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import ga
 
 """
@@ -10,10 +10,11 @@ The y=target is to maximize this equation ASAP:
 """
 
 # Inputs of the equation.
-equation_inputs = [4,-2,3.5,5,-11,-4.7]
+#equation_inputs = [4,-2,3.5,5,-11,-4.7]
+input_temps = np.zeros(48)
 
 # Number of the weights we are looking to optimize.
-num_weights = len(equation_inputs)
+num_weights = len(input_temps)
 
 """
 Genetic algorithm parameters:
@@ -26,7 +27,7 @@ num_parents_mating = 4
 # Defining the population size.
 pop_size = (sol_per_pop,num_weights) # The population will have sol_per_pop chromosome where each chromosome has num_weights genes.
 #Creating the initial population.
-new_population = numpy.random.uniform(low=-4.0, high=4.0, size=pop_size)
+new_population = np.random.uniform(low=-4.0, high=4.0, size=pop_size)
 print(new_population)
 
 """
@@ -47,9 +48,9 @@ for generation in range(num_generations):
     print("Fitness")
     print(fitness)
 
-    best_outputs.append(numpy.max(numpy.sum(new_population*equation_inputs, axis=1)))
+    best_outputs.append(np.max(np.sum(new_population*equation_inputs, axis=1)))
     # The best result in the current iteration.
-    print("Best result : ", numpy.max(numpy.sum(new_population*equation_inputs, axis=1)))
+    print("Best result : ", np.max(np.sum(new_population*equation_inputs, axis=1)))
     
     # Selecting the best parents in the population for mating.
     parents = ga.select_mating_pool(new_population, fitness, 
@@ -76,7 +77,7 @@ for generation in range(num_generations):
 #At first, the fitness is calculated for each solution in the final generation.
 fitness = ga.cal_pop_fitness(equation_inputs, new_population)
 # Then return the index of that solution corresponding to the best fitness.
-best_match_idx = numpy.where(fitness == numpy.max(fitness))
+best_match_idx = np.where(fitness == np.max(fitness))
 
 print("Best solution : ", new_population[best_match_idx, :])
 print("Best solution fitness : ", fitness[best_match_idx])
